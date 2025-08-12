@@ -1,0 +1,50 @@
+---
+import MainNav from "../components/MainNav.astro";
+import Header from "../components/Header.astro";
+import WSHAWStudentRunDeclaration from "../components/WSHAWStudentRunDeclaration.astro";
+import Splash from "../components/Splash.astro";
+import Footer from "../components/Footer.astro";
+
+import Scripts from "../components/Scripts.astro";
+
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://www.wwu.edu/themes/contrib/ashlar/favicon.ico"
+    />
+
+    <!-- add CSS includes here -->
+    <link rel="stylesheet" type="text/css" href="src/CSS/main.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="./css/ultimenu-extras.css" /> -->
+
+    
+    
+    <title>{title}</title>
+  </head>
+  <body>
+    <header>
+      <Header title="Western's Sehome Hill Arboretum site" />
+      <MainNav />
+      <Splash />
+    </header>
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer />
+    <Scripts />
+  </body>
+</html>

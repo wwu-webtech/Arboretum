@@ -1,0 +1,101 @@
+h1 {
+    text-align: center;
+}
+
+form {
+    margin: 0;
+}
+
+.align-left {
+    float: left;
+}
+.align-right {
+    float: right;
+}
+
+.photocaption {
+    font-size: var(--font-size--sm);
+    font-style: italic;
+    margin: 0;
+}
+.ultimenu {
+    position: relative;
+}
+.ultimenu__flyout,
+.ultimenu__region {
+    width: 100%;
+}
+.ultimenu .has-ultimenu .ultimenu__link {
+    padding-right: var(--space--lg);
+}
+
+.birds .card {
+    padding-bottom: var(--space--2xl);
+}
+.birds .card audio {
+    z-index: 2;
+    position: absolute;
+    bottom: 0;
+}
+.birds .card .image img {
+    height: unset;
+}
+
+.grid-column-count--2.column--50-50,
+.grid-column-count--2.column--75-25 {
+    grid-template-columns: unset;
+}
+@media (max-width: 580px) {
+    .grid-column-count--3 {
+        grid-template-columns: unset !important;
+    }
+}
+@media (min-width: 950px) {
+    .grid-column-count--2.column--50-50 {
+        grid-template-columns: 1fr 1fr;
+    }
+    .grid-column-count--2.column--75-25 {
+        grid-template-column: 3fr 1fr;
+    }
+}
+
+/* Container that holds the image and the text overlay */
+.splash {
+    position: relative;
+    width: 100%;
+    filter: brightness(75%);
+    max-height: 20vh;
+    overflow: hidden;
+  }
+  
+  /* Image styling */
+  .splash img {
+    width: 100%; /* Make the image responsive */
+    height: auto;
+  }
+  
+  /* Text overlay styling */
+  .text-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background for text contrast */
+    min-height: 30vh;
+    color: white; /* Text color */
+    padding: 20px; /* Add some space around the text */
+    text-align: center;
+  }
+  
+  .student-ran h2 {
+    margin: 0 0 10px 0; /* Margin between heading and paragraph */
+  }
+  
+  .student-ran p {
+    margin: 0;
+  }
+  

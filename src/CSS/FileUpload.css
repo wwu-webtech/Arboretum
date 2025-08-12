@@ -1,0 +1,52 @@
+#file-upload-form {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+#file-input {
+	width: 100%;
+	cursor: pointer;
+}
+
+#evaluate-image {
+	margin-bottom: 10px;
+	width: 100%;
+	background-color: var(--button-background-color);
+	border-radius: 3px;
+	color: white;
+	border: none;
+}
+
+.image-area {
+	display: flex;
+	flex-direction: column-reverse;
+	justify-content: center;
+}
+
+.image-area-content {
+	margin: 10px;
+	display: flex;
+	flex-direction: row-reverse;
+	position: relative;
+}
+
+#canvas {
+	object-fit: contain;
+	width: 95%;
+}
+
+#advanced-options summary, #character-limit summary, #other-options summary {
+	border: none;
+	padding: 0;
+}
+
+#other-options {
+	flex-direction: column;
+}
+
+#other-options div {
+	display: flex;
+	flex-direction: row;
+}
+
+

@@ -1,0 +1,180 @@
+---
+import { fileFromPath } from "openai";
+import Metadata from "./Metadata.astro";
+
+// gets fileName
+const handleFileSelect = (event) => {
+	const files = event.target.files || [];
+	const fileNames = Array.from(files).map((file) => file.name);
+	document.dispatchEvent(
+		new CustomEvent("fileSelected", { detail: fileNames })
+	);
+};
+---
+
+<astro-upload>
+	<div class="wwu-card horizontal dark-blue-bg">
+		<div class="body">
+			<form id="file-upload-form">
+				<label for="file-input"><h3>Name of File, please.</h3></label>
+				<input
+					type="file"
+					id="file-input"
+					accept=".png,.jpg,.jpeg,.webp"
+					multiple
+				/>
+
+				<!-- Expandable section for advanced options -->
+				<h3>Advanced Options</h3>
+				<details id="advanced-options">
+					<summary
+						>A place to store individual settings.</summary
+					>
+
+					<details id="character-limit" open>
+						<summary>Character Limit</summary>
+						<div class="radio">
+							<input
+								type="radio"
+								id="limit-response-140"
+								name="limit"
+								value="140"
+								checked
+							/>
+							<label for="limit-response-140"
+								>Limit responses to under 140 characters.</label
+							>
+						</div>
+						<div class="radio">
+							<input
+								type="radio"
+								id="limit-response-280"
+								name="limit"
+								value="280"
+							/>
+							<label for="limit-response-280"
+								>Limit responses to under 280 characters.</label
+							>
+						</div>
+						<div class="radio">
+							<input
+								type="radio"
+								id="limit-response-none"
+								name="limit"
+								value="no-limit"
+							/>
+							<label for="limit-response-none">No character limit.</label>
+						</div>
+					</details>
+
+					<details id="other-options">
+						<summary>Other</summary>
+						<div class="checkbox">
+							<input
+								type="checkbox"
+								id="show-metadata"
+								name="show-metadata"
+								checked="checked"
+							/>
+							<label for="show-metadata"
+								>Enable the download of metadata button</label
+							>
+						</div>
+					</details>
+				</details>
+			</form>
+
+			<button id="evaluate-image">Evaluate Selected Image</button>
+		</div>
+
+		<!-- Image List -->
+		<div class="image-list">
+			<h3>Uploaded Images</h3>
+			<ul id="image-list">
+				<!-- List items will be populated dynamically -->
+			</ul>
+		</div>
+
+		<!-- Image Area -->
+		<div class="image-area">
+			<div class="image-area-content">
+				<canvas id="canvas" aria-label=""></canvas>
+				<div class="bottom-right-metadata">
+					<Metadata />
+				</div>
+			</div>
+		</div>
+	</div>
+</astro-upload>
+
+<p>Selected file: <span id="file-name">No file selected</span></p>
+
+<ul id="image-list">
+	<!-- Dynamically populated list items will go here -->
+</ul>
+
+<script type="module">
+	const fileInput = document.querySelector("#file-input");
+	const imageList = document.querySelector("#image-list");
+	const fileNameSpan = document.querySelector("#file-name"); // Reference to the span for file name
+	const canvas = document.querySelector("#canvas");
+
+	fileInput.addEventListener("change", (event) => {
+		const files = event.target.files || [];
+
+		// Create preview thumbnails for each selected file
+		Array.from(files).forEach((file) => {
+			// Check if the file already exists in the list
+			const existingFile = Array.from(imageList.querySelectorAll("img")).find(
+				(img) => img.src === URL.createObjectURL(file)
+			);
+
+			// If the image doesn't exist in the list, add it
+			if (!existingFile) {
+				const listItem = document.createElement("li");
+				const img = document.createElement("img");
+				img.src = URL.createObjectURL(file);
+				img.alt = file.name;
+				img.style.width = "50px";
+				img.style.height = "50px";
+				img.classList.add("preview-image");
+				img.setAttribute("data-name", file.name); // Store the file name in a data attribute
+
+				listItem.appendChild(img);
+				imageList.appendChild(listItem);
+
+				// Add event listener to show image in the canvas when clicked
+				listItem.addEventListener("click", () => {
+					// Update the file name display with the clicked image's name
+					// Important variable to modify and track
+					fileNameSpan.textContent = img.getAttribute("data-name");
+
+					const reader = new FileReader();
+					reader.onload = function (e) {
+						const imgElement = new Image();
+						imgElement.onload = function () {
+							const ctx = canvas.getContext("2d");
+							canvas.width = imgElement.width;
+							canvas.height = imgElement.height;
+							ctx.drawImage(imgElement, 0, 0);
+						};
+						imgElement.src = e.target.result;
+					};
+					reader.readAsDataURL(file);
+				});
+			}
+		});
+	});
+</script>
+
+<script>
+	class AstroUpload extends HTMLElement {
+		constructor() {
+			super();
+		}
+	}
+
+	customElements.define("astro-upload", AstroUpload);
+</script>
+
+<script src="../js/UploadHelper.js"></script>
