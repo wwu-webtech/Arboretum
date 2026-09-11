@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.0",
-    "astro": "^6.1.9",
+    "astro": "^7.3.2",
     "exifreader": "^4.29.0",
     "openai": "^4.95.1"
   }
