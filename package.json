@@ -10,8 +10,12 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.0",
-    "astro": "^7.3.2",
+    "astro": "^7.4.0",
     "exifreader": "^4.29.0",
     "openai": "^4.95.1"
+  },
+  "allowScripts": {
+    "exifreader@4.45.0": true,
+    "esbuild@0.28.2": true
   }
 }
